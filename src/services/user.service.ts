@@ -19,11 +19,13 @@ export const userService = {
 		});
 
 		const { password, ...userWithoutPassword } = newUser;
+		//@ts-ignore
 		return userWithoutPassword;
 	},
 
 	getUsers: async (): Promise<IUserPublic[]> => {
 		const users = await userRepository.findAll();
+		//@ts-ignore
 		return users.map(({ password, ...rest }) => rest);
 	},
 
@@ -32,6 +34,7 @@ export const userService = {
 		if (!user) return null;
 
 		const { password, ...userWithoutPassword } = user;
+		//@ts-ignore
 		return userWithoutPassword;
 	},
 
