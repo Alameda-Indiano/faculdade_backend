@@ -7,11 +7,60 @@ datasource db {
     url      = env("DATABASE_URL")
 }
 
+enum UserType {
+    STUDENT
+    ADMIN
+}
+
 model User {
-    id         String   @id @default(uuid())
-    name       String
-    email      String   @unique
-    password   String
+    id                String            @id @default(uuid())
+    name              String
+    email             String            @unique
+    password          String
+    type              UserType
+    classes           UserToClasse[]
+    body_measurements BodyMeasurement[]
+
     created_at DateTime @default(now())
     updated_at DateTime @updatedAt
+
+    @@map("user")
+}
+
+model Classe {
+    id      String         @id @default(uuid())
+    name    String
+    maximum Int
+    users   UserToClasse[]
+
+    created_at DateTime @default(now())
+    updated_at DateTime @updatedAt
+
+    @@map("classe")
+}
+
+model UserToClasse {
+    user      User   @relation(fields: [user_id], references: [id])
+    user_id   String
+    classe    Classe @relation(fields: [classe_id], references: [id])
+    classe_id String
+
+    @@id([user_id, classe_id])
+    @@map("user_to_classe")
+}
+
+model BodyMeasurement {
+    id       String @id @default(uuid())
+    weight   Float
+    waist    Float
+    hip      Float
+    body_fat Float
+    bmi      Float
+    user_id  String
+    user     User   @relation(fields: [user_id], references: [id])
+
+    created_at DateTime @default(now())
+    updated_at DateTime @updatedAt
+
+    @@map("body_measurement")
 }
