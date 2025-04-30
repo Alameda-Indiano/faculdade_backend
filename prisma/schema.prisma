@@ -14,4 +14,36 @@ model User {
     password   String
     created_at DateTime @default(now())
     updated_at DateTime @updatedAt
+    Frequency Frequency[]
+    Subscription Subscription[]
+}
+
+model Frequency {
+  id          String   @id @default(uuid())
+  user_id     String
+  user        User     @relation(fields: [user_id], references: [id])
+  created_at  DateTime @default(now())
+}
+
+model Subscription {
+    id          String   @id @default(uuid())
+    recorrency String
+    cost       Float
+    status String
+    user_id String
+    user User @relation(fields: [user_id], references: [id])
+    created_at DateTime @default(now())
+    updated_at DateTime @updatedAt
+
+    Payment_History Payment_History[]
+}
+
+model Payment_History {
+	id          String   @id @default(uuid())
+	observation String
+	cost        Float
+	subscription_id String
+	subscription Subscription @relation(fields: [subscription_id], references: [id])
+	created_at  DateTime @default(now())
+	updated_at  DateTime @updatedAt
 }

@@ -1,0 +1,13 @@
+import { prisma } from '../config/prisma';
+import { ISubscriptionEntity } from '../entities/subscription.entity';
+
+export const subscriptionRepository = {
+    create: (data: ISubscriptionEntity) => prisma.subscription.create({ data }),
+    findAll: () => prisma.subscription.findMany(),
+    findById: (id: string) => prisma.subscription.findUnique({ where: { id } }),
+    findByUserId: (user_id: string) => 
+        prisma.subscription.findMany({ where: { user_id } }),
+    update: (id: string, data: Partial<ISubscriptionEntity>) =>
+        prisma.subscription.update({ where: { id }, data }),
+    delete: (id: string) => prisma.subscription.delete({ where: { id } }),
+};
