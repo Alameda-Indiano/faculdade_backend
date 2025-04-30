@@ -1,11 +1,10 @@
 import { Router } from 'express';
 import { userController } from '../controllers/user.controller';
-import { authenticateToken } from '../middlewares/auth.middleware';
 
 const router = Router();
 
 //@ts-ignore
-router.use(authenticateToken);
+// router.use(authenticateToken);
 
 //@ts-ignore
 router.post('/', userController.create);
