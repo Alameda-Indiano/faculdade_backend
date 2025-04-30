@@ -8,7 +8,8 @@
 CREATE TYPE "UserType" AS ENUM ('STUDENT', 'ADMIN');
 
 -- DropTable
-DROP TABLE "User";
+DROP TABLE "User" CASCADE;
+
 
 -- CreateTable
 CREATE TABLE "user" (

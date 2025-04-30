@@ -20,10 +20,11 @@ model User {
     type              UserType
     classes           UserToClasse[]
     body_measurements BodyMeasurement[]
+    frequency Frequency[]
+    subscription Subscription[]
 
     created_at DateTime @default(now())
     updated_at DateTime @updatedAt
-
     @@map("user")
 }
 
@@ -63,8 +64,7 @@ model BodyMeasurement {
     updated_at DateTime @updatedAt
 
     @@map("body_measurement")
-    Frequency Frequency[]
-    Subscription Subscription[]
+
 }
 
 model Frequency {
@@ -83,8 +83,7 @@ model Subscription {
     user User @relation(fields: [user_id], references: [id])
     created_at DateTime @default(now())
     updated_at DateTime @updatedAt
-
-    Payment_History Payment_History[]
+    payment_History Payment_History[]
 }
 
 model Payment_History {
