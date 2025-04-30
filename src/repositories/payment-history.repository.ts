@@ -3,7 +3,17 @@ import { IPaymentHistoryEntity } from '../entities/payment-history.entity';
 
 export const paymentHistoryRepository = {
     create: (data: IPaymentHistoryEntity) => prisma.payment_History.create({ data }),
-    findAll: () => prisma.payment_History.findMany(),
+    findAll: async () => await prisma.payment_History.findMany({
+        include: {
+          subscription: {
+            include: {
+              user: {
+                select: { name: true }
+              }
+            }
+          }
+        }
+      }),
     findById: (id: string) => prisma.payment_History.findUnique({ where: { id } }),
     findBySubscriptionId: (subscription_id: string) => 
         prisma.payment_History.findMany({ where: { subscription_id } }),
