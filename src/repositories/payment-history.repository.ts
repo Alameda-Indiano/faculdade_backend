@@ -14,7 +14,15 @@ export const paymentHistoryRepository = {
           }
         }
       }),
-    findById: (id: string) => prisma.payment_History.findUnique({ where: { id } }),
+    findById: (id: string) => prisma.payment_History.findUnique({ where: { id }, include: {
+      subscription: {
+        include: {
+          user: {
+            select: { name: true }
+          }
+        }
+      }
+    }  }),
     findBySubscriptionId: (subscription_id: string) => 
         prisma.payment_History.findMany({ where: { subscription_id } }),
     update: (id: string, data: Partial<IPaymentHistoryEntity>) =>

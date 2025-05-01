@@ -9,8 +9,9 @@ export const subscriptionRepository = {
         }
     }),
     findById: (id: string) => prisma.subscription.findUnique({ where: { id } }),
-    findByUserId: (user_id: string) => 
-        prisma.subscription.findMany({ where: { user_id } }),
+    findByUserId: (user_id: string) => prisma.subscription.findFirst({
+        where: { user_id }
+    }),
     update: (id: string, data: Partial<ISubscriptionEntity>) =>
         prisma.subscription.update({ where: { id }, data }),
     delete: (id: string) => prisma.subscription.delete({ where: { id } }),

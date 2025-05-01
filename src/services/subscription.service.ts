@@ -14,7 +14,7 @@ export const subscriptionService = {
         return await subscriptionRepository.findById(id);
     },
 
-    getSubscriptionsByUserId: async (userId: string): Promise<ISubscriptionEntity[]> => {
+    getSubscriptionsByUserId: async (userId: string): Promise<ISubscriptionEntity | null> => {
         return await subscriptionRepository.findByUserId(userId);
     },
 
