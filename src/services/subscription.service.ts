@@ -29,4 +29,5 @@ export const subscriptionService = {
     },
 
     deleteSubscription: subscriptionRepository.delete,
+    count: subscriptionRepository.count
 };

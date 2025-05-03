@@ -19,4 +19,7 @@ export const frequencyService = {
     },
 
     deleteFrequency: frequencyRepository.delete,
+    count: async (userId?: string): Promise<number> => {
+        return await frequencyRepository.count(userId);
+    },
 };

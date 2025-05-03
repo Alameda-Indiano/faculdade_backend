@@ -13,6 +13,8 @@ router.post('/', classeController.create);
 //@ts-ignore
 router.get('/', classeController.findAll);
 //@ts-ignore
+router.get('/count', classeController.count)
+//@ts-ignore
 router.get('/:id', classeController.findOne);
 //@ts-ignore
 router.put('/:id', classeController.update);

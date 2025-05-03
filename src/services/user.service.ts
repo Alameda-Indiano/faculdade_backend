@@ -67,4 +67,5 @@ export const userService = {
 	},
 
 	deleteUser: userRepository.delete,
+	count: userRepository.count
 };

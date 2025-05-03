@@ -15,4 +15,11 @@ export const subscriptionRepository = {
     update: (id: string, data: Partial<ISubscriptionEntity>) =>
         prisma.subscription.update({ where: { id }, data }),
     delete: (id: string) => prisma.subscription.delete({ where: { id } }),
+    count: () => prisma.subscription.count({
+        where: {
+            status: {
+                equals: "Ativo"
+            }
+        }
+    })
 };

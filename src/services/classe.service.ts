@@ -27,4 +27,5 @@ export const classeService = {
 	deleteClasse: async (id: string): Promise<void> => {
 		await classeRepository.delete(id);
 	},
+	count: classeRepository.count
 };

@@ -76,4 +76,9 @@ export const userRepository = {
 	}),
 	findByEmail: (email: string) => prisma.user.findUnique({ where: { email } }),
 	delete: (id: string) => prisma.user.delete({ where: { id } }),
+	count: () => prisma.user.count({
+		where: {
+			type: {equals: "STUDENT"}
+		}
+	})
 }

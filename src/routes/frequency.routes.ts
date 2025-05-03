@@ -12,6 +12,10 @@ router.post('/', frequencyController.create);
 //@ts-ignore
 router.get('/', frequencyController.findAll);
 //@ts-ignore
+router.get('/count/', frequencyController.count);
+//@ts-ignore
+router.get('/count/:userId', frequencyController.countByUser);
+//@ts-ignore
 router.get('/user/:userId', frequencyController.findByUserId);
 //@ts-ignore
 router.get('/:id', frequencyController.findOne);

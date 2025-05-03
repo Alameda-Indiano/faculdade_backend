@@ -13,8 +13,11 @@ router.get('/', userController.findAll);
 //@ts-ignore
 router.put('/:id', userController.update);
 //@ts-ignore
+router.get('/count/', userController.count)
+//@ts-ignore
 router.get('/:id', userController.findOne);
 //@ts-ignore
 router.delete('/:id', userController.remove);
+
 
 export default router;

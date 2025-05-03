@@ -71,4 +71,25 @@ export const classeController = {
 			return res.status(500).json({ success: false, message: 'Erro interno do servidor.' });
 		}
 	},
+	async count(req: Request, res: Response) {
+		try {
+			const count = await classeService.count();
+			return res.status(200).json({
+				success: true,
+				message: 'Total de turmas obtidas com sucesso.',
+				data: count
+			});
+		} catch (error) {
+			if (error instanceof Error) {
+				return res.status(400).json({
+					success: false,
+					message: error.message,
+				});
+			}
+			return res.status(500).json({
+				success: false,
+				message: 'Erro interno do servidor.',
+			});
+		}
+	},
 };

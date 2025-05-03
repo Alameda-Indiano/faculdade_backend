@@ -12,6 +12,8 @@ router.post('/', subscriptionController.create);
 //@ts-ignore
 router.get('/', subscriptionController.findAll);
 //@ts-ignore
+router.get('/count/', subscriptionController.count)
+//@ts-ignore
 router.get('/user/:userId', subscriptionController.findByUserId);
 //@ts-ignore
 router.get('/:id', subscriptionController.findOne);

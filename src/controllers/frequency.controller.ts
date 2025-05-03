@@ -122,4 +122,47 @@ export const frequencyController = {
             });
         }
     },
+    async count(req: Request, res: Response) {
+		try {
+			const count = await frequencyService.count();
+			return res.status(200).json({
+				success: true,
+				message: 'Total de frequências obtidas com sucesso.',
+				data: count
+			});
+		} catch (error) {
+			if (error instanceof Error) {
+				return res.status(400).json({
+					success: false,
+					message: error.message,
+				});
+			}
+			return res.status(500).json({
+				success: false,
+				message: 'Erro interno do servidor.',
+			});
+		}
+	},
+    async countByUser(req: Request, res: Response) {
+		try {
+            const { id } = req.params;
+			const count = await frequencyService.count(id);
+			return res.status(200).json({
+				success: true,
+				message: 'Total de frequências do usuário obtidas com sucesso.',
+				data: count
+			});
+		} catch (error) {
+			if (error instanceof Error) {
+				return res.status(400).json({
+					success: false,
+					message: error.message,
+				});
+			}
+			return res.status(500).json({
+				success: false,
+				message: 'Erro interno do servidor.',
+			});
+		}
+	},
 };

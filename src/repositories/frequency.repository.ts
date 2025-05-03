@@ -12,4 +12,11 @@ export const frequencyRepository = {
     findByUserId: (user_id: string) => 
         prisma.frequency.findMany({ where: { user_id } }),
     delete: (id: string) => prisma.frequency.delete({ where: { id } }),
+    count: (userId?: string) =>
+    prisma.frequency.count({
+        where: {
+        ...(userId && { user_id: userId })
+        }
+    })
+      
 };
