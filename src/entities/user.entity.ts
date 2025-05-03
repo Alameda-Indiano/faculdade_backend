@@ -1,4 +1,4 @@
-import { UserType as PrismaUserType } from '@prisma/client';
+import { Frequency, UserType as PrismaUserType, Subscription } from '@prisma/client';
 import { IBodyMeasurementEntity } from './bodyMeasurement.entity';
 import { IClasseEntity } from './classe.entity';
 
@@ -12,6 +12,8 @@ export interface IUserEntity {
 	type: UserType;
 	classes?: IClasseEntity[],
 	body_measurements?: IBodyMeasurementEntity[]
+	frequency?: Frequency[];
+	subscription?: Subscription;
 	created_at?: Date;
 	updated_at?: Date;
 }

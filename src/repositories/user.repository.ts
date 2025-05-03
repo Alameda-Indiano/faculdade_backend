@@ -3,11 +3,11 @@ import { IUserEntity } from '../entities/user.entity'
 
 export const userRepository = {
 	create: async (data: IUserEntity) => {
-		const { classes, body_measurements, id, created_at, updated_at, ...userFields } = data
+		const { classes, name, email, password, type } = data
 
 		const newUser = await prisma.user.create({
 			data: {
-				...userFields,
+				name, email, password, type,
 				classes: classes
 					? {
 						create: classes.map((c) => ({
@@ -29,11 +29,13 @@ export const userRepository = {
 	},
 
 	update: async (userId: string, data: Partial<IUserEntity>) => {
-		const { classes, body_measurements, id, created_at, updated_at, ...userFields } = data
+		const { classes, body_measurements, name, email, password, type } = data
 
 		const updatedUser = await prisma.user.update({
 			where: { id: userId },
-			data: userFields,
+			data: {
+				name, email, password, type
+			},
 		})
 
 		if (classes) {
@@ -66,6 +68,7 @@ export const userRepository = {
 	findAll: () => prisma.user.findMany({
 		include: {
 			classes: { include: { classe: true } },
+			subscription: true
 		},
 	}),
 	findById: (id: string) => prisma.user.findUnique({
@@ -78,7 +81,7 @@ export const userRepository = {
 	delete: (id: string) => prisma.user.delete({ where: { id } }),
 	count: () => prisma.user.count({
 		where: {
-			type: {equals: "STUDENT"}
+			type: { equals: "STUDENT" }
 		}
 	})
 }

@@ -20,22 +20,21 @@ model User {
     type              UserType
     classes           UserToClasse[]
     body_measurements BodyMeasurement[]
-    frequency Frequency[]
-    subscription Subscription[]
+    frequency         Frequency[]
+    subscription      Subscription?
+    created_at        DateTime          @default(now())
+    updated_at        DateTime          @updatedAt
 
-    created_at DateTime @default(now())
-    updated_at DateTime @updatedAt
     @@map("user")
 }
 
 model Classe {
-    id      String         @id @default(uuid())
-    name    String
-    maximum Int
-    users   UserToClasse[]
-
-    created_at DateTime @default(now())
-    updated_at DateTime @updatedAt
+    id         String         @id @default(uuid())
+    name       String
+    maximum    Int
+    users      UserToClasse[]
+    created_at DateTime       @default(now())
+    updated_at DateTime       @updatedAt
 
     @@map("classe")
 }
@@ -51,47 +50,47 @@ model UserToClasse {
 }
 
 model BodyMeasurement {
-    id       String @id @default(uuid())
-    weight   Float
-    waist    Float
-    hip      Float
-    body_fat Float
-    bmi      Float
-    user_id  String
-    user     User   @relation(fields: [user_id], references: [id])
-
+    id         String   @id @default(uuid())
+    weight     Float
+    waist      Float
+    hip        Float
+    body_fat   Float
+    bmi        Float
+    user_id    String
+    user       User     @relation(fields: [user_id], references: [id])
     created_at DateTime @default(now())
     updated_at DateTime @updatedAt
 
     @@map("body_measurement")
-
 }
 
 model Frequency {
-  id          String   @id @default(uuid())
-  user_id     String
-  user        User     @relation(fields: [user_id], references: [id])
-  created_at  DateTime @default(now())
+    id         String   @id @default(uuid())
+    user_id    String
+    user       User     @relation(fields: [user_id], references: [id])
+    created_at DateTime @default(now())
 }
 
 model Subscription {
-    id          String   @id @default(uuid())
-    recorrency String
-    cost       Float
-    status String
-    user_id String
-    user User @relation(fields: [user_id], references: [id])
-    created_at DateTime @default(now())
-    updated_at DateTime @updatedAt
+    id              String            @id @default(uuid())
+    recorrency      String
+    cost            Float
+    status          String
+    user_id         String            @unique
+    user            User              @relation(fields: [user_id], references: [id])
     payment_History Payment_History[]
+    created_at      DateTime          @default(now())
+    updated_at      DateTime          @updatedAt
+
+    @@map("subscription")
 }
 
 model Payment_History {
-	id          String   @id @default(uuid())
-	observation String
-	cost        Float
-	subscription_id String
-	subscription Subscription @relation(fields: [subscription_id], references: [id])
-	created_at  DateTime @default(now())
-	updated_at  DateTime @updatedAt
+    id              String       @id @default(uuid())
+    observation     String
+    cost            Float
+    subscription_id String
+    subscription    Subscription @relation(fields: [subscription_id], references: [id])
+    created_at      DateTime     @default(now())
+    updated_at      DateTime     @updatedAt
 }
