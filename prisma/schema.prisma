@@ -52,6 +52,7 @@ model UserToClasse {
 model BodyMeasurement {
     id         String   @id @default(uuid())
     weight     Float
+    height     Float?
     waist      Float
     hip        Float
     body_fat   Float

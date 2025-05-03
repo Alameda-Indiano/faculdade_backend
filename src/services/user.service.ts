@@ -25,7 +25,6 @@ export const userService = {
 
 	getUsers: async (): Promise<IUserPublic[]> => {
 		const users = await userRepository.findAll();
-		console.log("users", users)
 		//@ts-ignore
 		return users.map(({ password, ...rest }) => rest);
 	},

@@ -37,6 +37,7 @@ CREATE TABLE "user_to_classe" (
 CREATE TABLE "body_measurement" (
     "id" TEXT NOT NULL,
     "weight" DOUBLE PRECISION NOT NULL,
+    "height" DOUBLE PRECISION,
     "waist" DOUBLE PRECISION NOT NULL,
     "hip" DOUBLE PRECISION NOT NULL,
     "body_fat" DOUBLE PRECISION NOT NULL,

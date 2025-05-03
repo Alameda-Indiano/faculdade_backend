@@ -60,34 +60,42 @@ async function main() {
 
 	const fixedUsers = await Promise.all(
 		fixedUsersData.map((user) =>
-			prisma.user.create({
-				data: user,
-			}),
-		),
+			prisma.user.create({ data: user }),
+		)
 	);
 
+	const classNames = [
+		'Pilates Core',
+		'CrossFit Intenso',
+		'Musculação Funcional',
+		'Yoga Avançado',
+		'HIIT Power',
+	];
+
 	const classes = await Promise.all(
-		Array.from({ length: 5 }).map(() =>
+		classNames.map((name) =>
 			prisma.classe.create({
 				data: {
-					name: faker.company.buzzAdjective().replace(/\W/g, ''),
-					maximum: faker.number.int({ min: 10, max: 30 }),
+					name,
+					maximum: faker.number.int({ min: 10, max: 25 }),
 				},
 			}),
-		),
+		)
 	);
 
 	const randomUsers = await Promise.all(
-		Array.from({ length: 4 }).map(async () =>
-			prisma.user.create({
+		Array.from({ length: 4 }).map(async () => {
+			const name = faker.person.fullName();
+			const email = faker.internet.email({ firstName: name.split(' ')[0], lastName: name.split(' ')[1] });
+			return prisma.user.create({
 				data: {
-					name: faker.person.fullName(),
-					email: faker.internet.email(),
-					password: await bcrypt.hash(faker.internet.password({ length: 8 }), 10),
+					name,
+					email,
+					password: await bcrypt.hash(faker.internet.password({ length: 10 }), 10),
 					type: faker.helpers.arrayElement([UserType.STUDENT, UserType.ADMIN]),
 				},
-			}),
-		),
+			});
+		})
 	);
 
 	const users = [...fixedUsers, ...randomUsers];
@@ -108,21 +116,28 @@ async function main() {
 		await prisma.frequency.create({ data: { user_id: user.id } });
 
 		for (let i = 0; i < 3; i++) {
-			const weight = faker.number.float({ min: 50, max: 100, fractionDigits: 1 });
-			const waist = faker.number.float({ min: 60, max: 120, fractionDigits: 1 });
-			const hip = faker.number.float({ min: 80, max: 140, fractionDigits: 1 });
-			const body_fat = faker.number.float({ min: 10, max: 30, fractionDigits: 1 });
-			const bmi = +(weight / ((waist / 100) ** 2)).toFixed(1);
+			const height = faker.number.float({ min: 1.55, max: 1.90, fractionDigits: 2 });
+			const weight = faker.number.float({ min: 55, max: 95, fractionDigits: 1 });
+			const waist = faker.number.float({ min: 65, max: 110, fractionDigits: 1 });
+			const hip = faker.number.float({ min: 85, max: 130, fractionDigits: 1 });
+			const body_fat = faker.number.float({ min: 12, max: 28, fractionDigits: 1 });
+			const bmi = +(weight / (height * height)).toFixed(1);
 
 			await prisma.bodyMeasurement.create({
 				data: { weight, waist, hip, body_fat, bmi, user_id: user.id },
 			});
 		}
 
+		const plan = faker.helpers.arrayElement([
+			{ tipo: 'MONTHLY', valor: 89.9 },
+			{ tipo: 'QUARTERLY', valor: 229.9 },
+			{ tipo: 'YEARLY', valor: 679.0 },
+		]);
+
 		const subscription = await prisma.subscription.create({
 			data: {
-				recorrency: faker.helpers.arrayElement(['MONTHLY', 'QUARTERLY', 'YEARLY']),
-				cost: parseFloat(faker.finance.amount({ min: 50, max: 200, dec: 2 })),
+				recorrency: plan.tipo,
+				cost: plan.valor,
 				status: faker.helpers.arrayElement(['ACTIVE', 'INACTIVE']),
 				user_id: user.id,
 			},
@@ -133,7 +148,12 @@ async function main() {
 			await prisma.payment_History.create({
 				data: {
 					subscription_id: subscription.id,
-					observation: faker.lorem.sentence(),
+					observation: faker.helpers.arrayElement([
+						'Pagamento via cartão de crédito',
+						'Pagamento por Pix',
+						'Renovação automática',
+						'Pagamento em dinheiro na recepção',
+					]),
 					cost: subscription.cost,
 				},
 			});
