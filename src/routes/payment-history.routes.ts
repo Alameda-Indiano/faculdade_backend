@@ -1,11 +1,10 @@
 import { Router } from 'express';
 import { paymentHistoryController } from '../controllers/payment-history.controller';
-import { authenticateToken } from '../middlewares/auth.middleware';
 
 const router = Router();
 
 //@ts-ignore
-router.use(authenticateToken);
+// router.use(authenticateToken);
 
 //@ts-ignore
 router.post('/', paymentHistoryController.create);
