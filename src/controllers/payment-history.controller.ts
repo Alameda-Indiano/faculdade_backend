@@ -101,6 +101,31 @@ export const paymentHistoryController = {
         }
     },
 
+    async findByUserId(req: Request, res: Response) {
+        try {
+            const { userId } = req.params;
+
+            const paymentHistories = await paymentHistoryService.getPaymentHistoriesByUserId(userId);
+            
+            return res.json({
+                success: true,
+                message: 'Históricos de pagamento da assinatura encontrados com sucesso.',
+                data: paymentHistories,
+            });
+        } catch (error) {
+            if (error instanceof Error) {
+                return res.status(400).json({
+                    success: false,
+                    message: error.message,
+                });
+            }
+            return res.status(500).json({
+                success: false,
+                message: 'Erro interno do servidor.',
+            });
+        }
+    },
+
     async update(req: Request, res: Response) {
         try {
             const { id } = req.params;

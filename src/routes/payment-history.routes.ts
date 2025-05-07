@@ -13,6 +13,8 @@ router.get('/', paymentHistoryController.findAll);
 //@ts-ignore
 router.get('/subscription/:subscriptionId', paymentHistoryController.findBySubscriptionId);
 //@ts-ignore
+router.get('/user/:userId', paymentHistoryController.findByUserId);
+//@ts-ignore
 router.get('/:id', paymentHistoryController.findOne);
 //@ts-ignore
 router.put('/:id', paymentHistoryController.update);

@@ -25,6 +25,20 @@ export const paymentHistoryRepository = {
     }  }),
     findBySubscriptionId: (subscription_id: string) => 
         prisma.payment_History.findMany({ where: { subscription_id } }),
+    findByUserId: async (user_id: string) => {
+      const subscription = await prisma.subscription.findUnique({
+        where: { user_id },
+        include: { 
+          payment_History: true
+        } 
+      });
+
+      if (!subscription) {
+          throw new Error('Usuário não tem uma assinatura.');
+      }
+
+      return subscription.payment_History;
+    },
     update: (id: string, data: Partial<IPaymentHistoryEntity>) =>
         prisma.payment_History.update({ where: { id }, data }),
     delete: (id: string) => prisma.payment_History.delete({ where: { id } }),

@@ -14,6 +14,10 @@ export const paymentHistoryService = {
         return await paymentHistoryRepository.findById(id);
     },
 
+    getPaymentHistoriesByUserId: async (userId: string): Promise<IPaymentHistoryEntity[]> => {
+        return await paymentHistoryRepository.findByUserId(userId);
+    },
+
     getPaymentHistoriesBySubscriptionId: async (subscriptionId: string): Promise<IPaymentHistoryEntity[]> => {
         return await paymentHistoryRepository.findBySubscriptionId(subscriptionId);
     },
