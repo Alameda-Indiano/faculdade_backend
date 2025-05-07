@@ -10,7 +10,7 @@ export const frequencyRepository = {
     }),
     findById: (id: string) => prisma.frequency.findUnique({ where: { id } }),
     findByUserId: (user_id: string) => 
-        prisma.frequency.findMany({ where: { user_id } }),
+        prisma.frequency.findMany({ where: { user_id }, include: { user: true } }),
     delete: (id: string) => prisma.frequency.delete({ where: { id } }),
     count: (userId?: string) =>
     prisma.frequency.count({
