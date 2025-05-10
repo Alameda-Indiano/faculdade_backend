@@ -40,9 +40,9 @@ model Classe {
 }
 
 model UserToClasse {
-    user      User   @relation(fields: [user_id], references: [id])
+    user      User   @relation(fields: [user_id], references: [id], onDelete: Cascade)
     user_id   String
-    classe    Classe @relation(fields: [classe_id], references: [id])
+    classe    Classe @relation(fields: [classe_id], references: [id], onDelete: Cascade)
     classe_id String
 
     @@id([user_id, classe_id])
@@ -58,7 +58,7 @@ model BodyMeasurement {
     body_fat   Float
     bmi        Float
     user_id    String
-    user       User     @relation(fields: [user_id], references: [id])
+    user       User     @relation(fields: [user_id], references: [id], onDelete: Cascade)
     created_at DateTime @default(now())
     updated_at DateTime @updatedAt
 
@@ -68,7 +68,7 @@ model BodyMeasurement {
 model Frequency {
     id         String   @id @default(uuid())
     user_id    String
-    user       User     @relation(fields: [user_id], references: [id])
+    user       User     @relation(fields: [user_id], references: [id], onDelete: Cascade)
     created_at DateTime @default(now())
 }
 
@@ -78,7 +78,7 @@ model Subscription {
     cost            Float
     status          String
     user_id         String            @unique
-    user            User              @relation(fields: [user_id], references: [id])
+    user            User              @relation(fields: [user_id], references: [id], onDelete: Cascade)
     payment_History Payment_History[]
     created_at      DateTime          @default(now())
     updated_at      DateTime          @updatedAt
@@ -91,7 +91,7 @@ model Payment_History {
     observation     String
     cost            Float
     subscription_id String
-    subscription    Subscription @relation(fields: [subscription_id], references: [id])
+    subscription    Subscription @relation(fields: [subscription_id], references: [id], onDelete: Cascade)
     created_at      DateTime     @default(now())
     updated_at      DateTime     @updatedAt
 }
