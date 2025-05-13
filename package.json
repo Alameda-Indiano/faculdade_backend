@@ -7,7 +7,7 @@
 		"start": "node dist/server.js",
 		"dev": "ts-node-dev --respawn src/server.ts",
 		"prisma:generate": "prisma generate",
-		"seed": "ts-node prisma/seed.ts",
+		"seed": "ts-node src/config/seed.ts",
 		"prisma:migrate": "prisma migrate deploy"
 	},
 	"keywords": [],
